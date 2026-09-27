@@ -1,284 +1,184 @@
-<html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Julaid Hosen — Data Entry Specialist</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --bg:#0E1210;
-    --panel:#151B18;
-    --line:rgba(237,239,234,0.10);
-    --line-strong:rgba(237,239,234,0.18);
-    --ink:#ECEFEA;
-    --muted:#8A968E;
-    --accent:#B6FF3C;
-    --accent-dim:rgba(182,255,60,0.14);
-    font-family:'Space Grotesk', system-ui, sans-serif;
-    box-sizing:border-box;
-    padding-top:env(safe-area-inset-top,0px);
-    padding-bottom:env(safe-area-inset-bottom,0px);
-  }
-  html{scroll-padding-top:env(safe-area-inset-top,0px);}
-  *,*::before,*::after{box-sizing:inherit;}
-  html,body{margin:0;background:var(--bg);color:var(--ink);}
-  body{overflow-x:hidden;}
-  .mono{font-family:'IBM Plex Mono', ui-monospace, monospace;}
-  a{color:inherit;}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101827">
+  <title>Skycast — Weather Dashboard</title>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --panel: rgba(21, 33, 54, .82);
+      --panel-light: rgba(255,255,255,.08);
+      --text: #f4f8ff;
+      --muted: #9caecc;
+      --accent: #72d8ff;
+      --accent-2: #a78bfa;
+      --danger: #ff9b9b;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
 
-  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
-
-  /* ---------- header ---------- */
-  header.top{
-    position:sticky;top:0;top:env(safe-area-inset-top,0px);
-    z-index:10;background:rgba(14,18,16,0.85);backdrop-filter:blur(8px);
-    border-bottom:1px solid var(--line);
-  }
-  .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1040px;margin:0 auto;}
-  .topbar .name{font-weight:600;font-size:15px;letter-spacing:0.01em;}
-  .topbar .status{font-size:12px;color:var(--accent);display:flex;align-items:center;gap:6px;}
-  .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
-
-  /* ---------- hero ---------- */
-  .hero{
-    display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;
-    align-items:center;padding:64px 24px 56px;max-width:1040px;margin:0 auto;
-    perspective:1200px;
-  }
-  .hero-copy .ref{font-size:12px;color:var(--muted);margin:0 0 18px;}
-  .hero-copy h1{font-size:clamp(34px,6vw,54px);line-height:1.05;margin:0 0 14px;font-weight:700;}
-  .hero-copy .role{font-size:16px;color:var(--accent);margin:0 0 20px;}
-  .hero-copy p{font-size:15px;line-height:1.6;color:var(--muted);max-width:46ch;margin:0 0 26px;}
-  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
-  .btn{
-    font-size:13px;padding:11px 18px;border-radius:3px;text-decoration:none;
-    border:1px solid var(--line-strong);display:inline-block;
-  }
-  .btn.primary{background:var(--accent);color:#0E1210;border-color:var(--accent);font-weight:600;}
-  .btn.ghost{color:var(--ink);}
-
-  .sheet-stage{
-    height:320px;transform-style:preserve-3d;position:relative;
-    transition:transform 0.15s ease-out;
-  }
-  .sheet-row{
-    position:absolute;left:0;right:0;height:34px;
-    background:var(--panel);border:1px solid var(--line-strong);
-    border-radius:2px;display:flex;align-items:center;padding:0 12px;gap:10px;
-    font-size:11px;color:var(--muted);
-    animation:settle 1.1s cubic-bezier(.2,.8,.2,1) both;
-  }
-  .sheet-row .cell{border-right:1px solid var(--line);padding-right:10px;flex:1;white-space:nowrap;overflow:hidden;}
-  .sheet-row .cell:last-child{border-right:none;flex:1.4;color:var(--ink);}
-  .sheet-row.r0{top:0;   animation-delay:.05s;}
-  .sheet-row.r1{top:44px;animation-delay:.15s;}
-  .sheet-row.r2{top:88px;animation-delay:.25s;}
-  .sheet-row.r3{top:132px;animation-delay:.35s;}
-  .sheet-row.r4{top:176px;animation-delay:.45s;}
-  .sheet-row.r5{top:220px;animation-delay:.55s;background:var(--accent-dim);border-color:rgba(182,255,60,0.4);}
-  @keyframes settle{
-    0%{opacity:0;transform:translate3d(var(--dx,40px),var(--dy,-30px),var(--dz,-60px)) rotateX(var(--rx,30deg)) rotateY(var(--ry,-20deg));}
-    100%{opacity:1;transform:translate3d(0,0,0) rotateX(0) rotateY(0);}
-  }
-  .sheet-row.r0{--dx:-50px;--dy:-40px;--dz:-80px;--rx:35deg;--ry:25deg;}
-  .sheet-row.r1{--dx:60px;--dy:-20px;--dz:-40px;--rx:-25deg;--ry:-30deg;}
-  .sheet-row.r2{--dx:-30px;--dy:30px;--dz:-100px;--rx:40deg;--ry:15deg;}
-  .sheet-row.r3{--dx:45px;--dy:-35px;--dz:-60px;--rx:-30deg;--ry:20deg;}
-  .sheet-row.r4{--dx:-55px;--dy:20px;--dz:-50px;--rx:20deg;--ry:-25deg;}
-  .sheet-row.r5{--dx:35px;--dy:35px;--dz:-70px;--rx:-35deg;--ry:-15deg;}
-
-  section{padding:52px 24px;max-width:1040px;margin:0 auto;border-top:1px solid var(--line);}
-  .kicker{font-size:12px;color:var(--muted);margin:0 0 16px;}
-  .kicker .cellref{color:var(--accent);}
-  h2{font-size:22px;margin:0 0 22px;font-weight:600;}
-
-  /* about */
-  .about p{font-size:15.5px;line-height:1.75;color:#C9CFC9;max-width:64ch;}
-
-  /* experience */
-  .job{border:1px solid var(--line-strong);border-radius:4px;padding:22px 24px;background:var(--panel);}
-  .job-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
-  .job-title{font-weight:600;font-size:16px;}
-  .job-sub{font-size:13px;color:var(--muted);}
-  .job ul{margin:0;padding-left:18px;color:#C9CFC9;font-size:14.5px;line-height:1.9;}
-
-  /* skills grid = spreadsheet cells */
-  .grid-table{border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;}
-  .grow{display:grid;grid-template-columns:repeat(2,1fr);}
-  .grow:not(:last-child){border-bottom:1px solid var(--line);}
-  .gcell{
-    padding:13px 16px;font-size:13.5px;display:flex;align-items:center;gap:10px;
-    border-right:1px solid var(--line);
-  }
-  .gcell:last-child{border-right:none;}
-  .gcell .idx{color:var(--muted);font-size:11px;width:20px;}
-
-  /* education timeline */
-  .edu-row{display:grid;grid-template-columns:120px 1fr auto;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:baseline;}
-  .edu-row:last-child{border-bottom:none;}
-  .edu-year{color:var(--accent);}
-  .edu-name{color:var(--ink);}
-  .edu-meta{color:var(--muted);font-size:12.5px;}
-
-  /* strengths */
-  .tags{display:flex;flex-wrap:wrap;gap:10px;}
-  .tag{border:1px solid var(--line-strong);border-radius:3px;padding:8px 14px;font-size:13px;color:#C9CFC9;}
-
-  /* contact/footer */
-  footer{padding:56px 24px 48px;max-width:1040px;margin:0 auto;border-top:1px solid var(--line);}
-  .contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:30px;}
-  footer h2{font-size:26px;}
-  .contact-list{list-style:none;padding:0;margin:0;font-size:14px;}
-  .contact-list li{padding:10px 0;border-bottom:1px solid var(--line);color:var(--muted);}
-  .contact-list li span{color:var(--ink);float:right;}
-  .fine{margin-top:30px;font-size:12px;color:var(--muted);}
-
-  @media (max-width:720px){
-    .hero{grid-template-columns:1fr;padding-top:40px;}
-    .sheet-stage{height:230px;}
-    .sheet-row{height:28px;font-size:10px;}
-    .sheet-row.r1{top:36px;}.sheet-row.r2{top:72px;}.sheet-row.r3{top:108px;}.sheet-row.r4{top:144px;}.sheet-row.r5{top:180px;}
-    .contact-grid{grid-template-columns:1fr;}
-    .grow{grid-template-columns:1fr;}
-    .gcell{border-right:none;border-bottom:1px solid var(--line);}
-  }
-
-  @media (prefers-reduced-motion:reduce){
-    .sheet-row{animation:none !important;opacity:1;transform:none !important;}
-    .sheet-stage{transform:none !important;}
-  }
-
-  ::selection{background:var(--accent);color:#0E1210;}
-  a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
-</style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--text);
+      background: radial-gradient(circle at 15% 0%, #203b63 0, transparent 35%), var(--bg);
+    }
+    button, input { font: inherit; }
+    button { cursor: pointer; }
+    .app { width: min(1120px, 100%); margin: auto; padding: 28px 20px 44px; }
+    header { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 28px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .logo { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 14px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); font-size: 24px; }
+    h1, h2, p { margin: 0; }
+    h1 { font-size: clamp(1.35rem, 4vw, 1.8rem); }
+    .eyebrow { color: var(--muted); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; }
+    .search { display: flex; width: min(430px, 100%); gap: 8px; }
+    .search input { min-width: 0; flex: 1; color: var(--text); background: var(--panel-light); border: 1px solid rgba(255,255,255,.14); border-radius: 10px; padding: 12px 14px; outline: none; }
+    .search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(114,216,255,.15); }
+    .button { border: 0; border-radius: 10px; padding: 11px 15px; color: #07111f; background: var(--accent); font-weight: 700; }
+    .button.secondary { color: var(--text); background: var(--panel-light); border: 1px solid rgba(255,255,255,.12); }
+    .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .unit-toggle { display: flex; overflow: hidden; border: 1px solid rgba(255,255,255,.13); border-radius: 9px; }
+    .unit-toggle button { border: 0; padding: 7px 11px; color: var(--muted); background: transparent; }
+    .unit-toggle button.active { color: #07111f; background: var(--accent); font-weight: 700; }
+    .status { min-height: 24px; color: var(--muted); font-size: .92rem; }
+    .status.error { color: var(--danger); }
+    .dashboard { display: grid; grid-template-columns: 1.3fr .7fr; gap: 16px; }
+    .card { background: var(--panel); border: 1px solid rgba(255,255,255,.1); border-radius: 18px; box-shadow: 0 18px 50px rgba(0,0,0,.18); backdrop-filter: blur(14px); }
+    .current { padding: 28px; min-height: 290px; display: flex; flex-direction: column; justify-content: space-between; background: linear-gradient(135deg, rgba(42,74,117,.8), rgba(21,33,54,.8)); }
+    .location { font-size: clamp(1.5rem, 5vw, 2.35rem); margin-top: 6px; }
+    .date { color: var(--muted); margin-top: 5px; }
+    .temperature { display: flex; align-items: center; gap: 18px; margin-top: 28px; }
+    .weather-icon { font-size: clamp(4rem, 10vw, 6rem); line-height: 1; }
+    .temp { font-size: clamp(4rem, 11vw, 6.6rem); line-height: .9; letter-spacing: -.08em; }
+    .condition { color: var(--accent); font-size: 1.1rem; text-transform: capitalize; }
+    .details { padding: 22px; }
+    .details h2, .forecast h2 { font-size: 1rem; margin-bottom: 18px; }
+    .metric-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .metric { padding: 15px; border-radius: 12px; background: var(--panel-light); }
+    .metric-label { color: var(--muted); font-size: .78rem; }
+    .metric-value { margin-top: 5px; font-size: 1.15rem; font-weight: 700; }
+    .forecast { grid-column: 1 / -1; padding: 22px; }
+    .forecast-list { display: grid; grid-template-columns: repeat(7, 1fr); gap: 10px; }
+    .forecast-day { padding: 15px 8px; text-align: center; border-radius: 12px; background: var(--panel-light); }
+    .forecast-day strong { display: block; font-size: .85rem; }
+    .forecast-day .small-icon { display: block; margin: 12px 0; font-size: 1.7rem; }
+    .forecast-day span { color: var(--muted); font-size: .8rem; }
+    .loading { opacity: .6; pointer-events: none; }
+    footer { margin-top: 22px; color: var(--muted); text-align: center; font-size: .8rem; }
+    @media (max-width: 760px) {
+      header, .toolbar { align-items: stretch; flex-direction: column; }
+      .search { width: 100%; }
+      .dashboard { grid-template-columns: 1fr; }
+      .forecast { grid-column: auto; overflow-x: auto; }
+      .forecast-list { min-width: 650px; }
+    }
+  </style>
 </head>
 <body>
+  <main class="app">
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">☀</div>
+        <div><p class="eyebrow">Live weather</p><h1>Skycast Dashboard</h1></div>
+      </div>
+      <form class="search" id="searchForm" role="search">
+        <label class="sr-only" for="cityInput">Search for a city</label>
+        <input id="cityInput" type="search" placeholder="Search city, e.g. Dhaka" autocomplete="off" required>
+        <button class="button" type="submit">Search</button>
+      </form>
+    </header>
 
-<header class="top">
-  <div class="topbar">
-    <div class="name">Julaid Hosen</div>
-    <div class="status mono"><span class="dot"></span>Available for work</div>
-  </div>
-</header>
-
-<section class="hero">
-  <div class="hero-copy">
-    <p class="ref mono">A1 · Data Entry Specialist</p>
-    <h1>Turning scattered<br>data into order.</h1>
-    <p class="role mono">Julaid Hosen</p>
-    <p>I clean, structure and list product data for e‑commerce catalogs — mining, formatting and organizing information so it's accurate, consistent, and ready to use.</p>
-    <div class="hero-actions">
-      <a class="btn primary" href="mailto:jihad.sorkar.9856@gmail.com">Get in touch</a>
-      <a class="btn ghost" href="#experience">See experience</a>
-    </div>
-  </div>
-  <div class="sheet-stage" id="stage">
-    <div class="sheet-row r0"><div class="cell">SKU</div><div class="cell">Title</div><div class="cell">Category</div><div class="cell">Status</div></div>
-    <div class="sheet-row r1"><div class="cell">1024</div><div class="cell">Ceramic Mug — 350ml</div><div class="cell">Kitchen</div><div class="cell">Listed</div></div>
-    <div class="sheet-row r2"><div class="cell">1025</div><div class="cell">Cotton Tote Bag</div><div class="cell">Bags</div><div class="cell">Listed</div></div>
-    <div class="sheet-row r3"><div class="cell">1026</div><div class="cell">Desk Lamp — LED</div><div class="cell">Home</div><div class="cell">Listed</div></div>
-    <div class="sheet-row r4"><div class="cell">1027</div><div class="cell">Wireless Mouse</div><div class="cell">Electronics</div><div class="cell">Listed</div></div>
-    <div class="sheet-row r5"><div class="cell">1028</div><div class="cell">Notebook — A5</div><div class="cell">Stationery</div><div class="cell">Verified ✓</div></div>
-  </div>
-</section>
-
-<section class="about">
-  <p class="kicker"><span class="cellref mono">A2</span> <span class="mono">· Objective</span></p>
-  <h2>Career objective</h2>
-  <p>Motivated and detail-oriented, seeking to apply Excel, e‑commerce data entry, product listing, data collection and data management skills — committed to accuracy, organized work, and meeting deadlines.</p>
-</section>
-
-<section id="experience">
-  <p class="kicker"><span class="cellref mono">B1</span> <span class="mono">· Experience</span></p>
-  <h2>Work experience</h2>
-  <div class="job">
-    <div class="job-head">
-      <div class="job-title">E‑Commerce Data Entry Specialist</div>
-      <div class="job-sub mono">Michaels & Radyan Marketplace</div>
-    </div>
-    <ul>
-      <li>Data mining and online product research</li>
-      <li>Data formatting and data extraction</li>
-      <li>Data scraping and data collection</li>
-      <li>Data analysis and spreadsheet management</li>
-      <li>Product listing and e‑commerce data entry</li>
-      <li>Organizing product titles, descriptions, categories and related information</li>
-      <li>Maintaining accurate and consistent product data</li>
-    </ul>
-  </div>
-</section>
-
-<section>
-  <p class="kicker"><span class="cellref mono">C1</span> <span class="mono">· Core skills</span></p>
-  <h2>What I work with</h2>
-  <div class="grid-table">
-    <div class="grow"><div class="gcell"><span class="idx mono">01</span>Data Mining</div><div class="gcell"><span class="idx mono">02</span>Data Formatting</div></div>
-    <div class="grow"><div class="gcell"><span class="idx mono">03</span>Data Scraping</div><div class="gcell"><span class="idx mono">04</span>Data Extraction</div></div>
-    <div class="grow"><div class="gcell"><span class="idx mono">05</span>Data Collection</div><div class="gcell"><span class="idx mono">06</span>Data Analysis</div></div>
-    <div class="grow"><div class="gcell"><span class="idx mono">07</span>Product Listing</div><div class="gcell"><span class="idx mono">08</span>E‑Commerce Data Entry</div></div>
-    <div class="grow"><div class="gcell"><span class="idx mono">09</span>Microsoft Excel</div><div class="gcell"><span class="idx mono">10</span>Fast Typing</div></div>
-    <div class="grow"><div class="gcell"><span class="idx mono">11</span>Attention to Detail</div><div class="gcell"><span class="idx mono">12</span>Computer Literacy</div></div>
-  </div>
-</section>
-
-<section>
-  <p class="kicker"><span class="cellref mono">D1</span> <span class="mono">· Education</span></p>
-  <h2>Education</h2>
-  <div>
-    <div class="edu-row"><div class="edu-year mono">Running</div><div class="edu-name">Honours</div><div class="edu-meta mono">Currently enrolled</div></div>
-    <div class="edu-row"><div class="edu-year mono">2024</div><div class="edu-name">HSC — Higher Secondary Certificate</div><div class="edu-meta mono">GPA 3.00</div></div>
-    <div class="edu-row"><div class="edu-year mono">2021</div><div class="edu-name">SSC — Secondary School Certificate</div><div class="edu-meta mono">GPA 4.00</div></div>
-  </div>
-</section>
-
-<section>
-  <p class="kicker"><span class="cellref mono">E1</span> <span class="mono">· Strengths & languages</span></p>
-  <h2>Strengths</h2>
-  <div class="tags">
-    <div class="tag">Accurate and efficient</div>
-    <div class="tag">Strong organizational skills</div>
-    <div class="tag">Ability to meet deadlines</div>
-    <div class="tag">Detail-oriented</div>
-  </div>
-  <p class="fine mono">Bengali — Native &nbsp;·&nbsp; English — Intermediate</p>
-</section>
-
-<footer>
-  <div class="contact-grid">
-    <div>
-      <h2>Let's work together.</h2>
-      <p style="color:var(--muted);font-size:14.5px;line-height:1.7;max-width:40ch;">Available for data entry, product listing and catalog management projects.</p>
-      <div class="hero-actions" style="margin-top:20px;">
-        <a class="btn primary" href="mailto:jihad.sorkar.9856@gmail.com">Email me</a>
+    <div class="toolbar">
+      <p id="status" class="status" aria-live="polite">Search for a city to see the latest forecast.</p>
+      <div class="unit-toggle" aria-label="Temperature unit">
+        <button type="button" data-unit="celsius" class="active">°C</button>
+        <button type="button" data-unit="fahrenheit">°F</button>
       </div>
     </div>
-    <ul class="contact-list mono">
-      <li>Phone <span>0179103457</span></li>
-      <li>Email <span>jihad.sorkar.9856@gmail.com</span></li>
-      <li>Location <span>Gobindaganj, Rangpur, BD</span></li>
-    </ul>
-  </div>
-</footer>
 
-<script>
-  // subtle parallax tilt on the 3D sheet stack, following pointer
-  var stage = document.getElementById('stage');
-  var hero = document.querySelector('.hero');
-  if (stage && hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    hero.addEventListener('mousemove', function(e){
-      var r = hero.getBoundingClientRect();
-      var x = (e.clientX - r.left) / r.width - 0.5;
-      var y = (e.clientY - r.top) / r.height - 0.5;
-      stage.style.transform = 'rotateX(' + (y * -8) + 'deg) rotateY(' + (x * 10) + 'deg)';
-    });
-    hero.addEventListener('mouseleave', function(){
-      stage.style.transform = 'rotateX(0deg) rotateY(0deg)';
-    });
-  }
-</script>
+    <section id="dashboard" class="dashboard" aria-live="polite" hidden>
+      <article class="card current">
+        <div><p class="eyebrow">Current conditions</p><h2 id="location" class="location"></h2><p id="date" class="date"></p></div>
+        <div class="temperature"><span id="currentIcon" class="weather-icon" aria-hidden="true">☀️</span><div><div id="temperature" class="temp"></div><div id="condition" class="condition"></div></div></div>
+      </article>
+      <article class="card details"><h2>Today's details</h2><div class="metric-grid">
+        <div class="metric"><div class="metric-label">Feels like</div><div id="feelsLike" class="metric-value">—</div></div>
+        <div class="metric"><div class="metric-label">Humidity</div><div id="humidity" class="metric-value">—</div></div>
+        <div class="metric"><div class="metric-label">Wind</div><div id="wind" class="metric-value">—</div></div>
+        <div class="metric"><div class="metric-label">Precipitation</div><div id="precipitation" class="metric-value">—</div></div>
+      </div></article>
+      <article class="card forecast"><h2>7-day forecast</h2><div id="forecastList" class="forecast-list"></div></article>
+    </section>
+    <footer>Weather data provided by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>. No API key required.</footer>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const state = { unit: 'celsius', weather: null };
+    const weatherCodes = {
+      0: ['Clear sky', '☀️'], 1: ['Mainly clear', '🌤️'], 2: ['Partly cloudy', '⛅'], 3: ['Overcast', '☁️'],
+      45: ['Fog', '🌫️'], 48: ['Rime fog', '🌫️'], 51: ['Light drizzle', '🌦️'], 53: ['Drizzle', '🌦️'], 55: ['Heavy drizzle', '🌧️'],
+      61: ['Light rain', '🌦️'], 63: ['Rain', '🌧️'], 65: ['Heavy rain', '🌧️'], 71: ['Light snow', '🌨️'], 73: ['Snow', '❄️'], 75: ['Heavy snow', '❄️'],
+      80: ['Rain showers', '🌦️'], 81: ['Rain showers', '🌧️'], 82: ['Heavy showers', '⛈️'], 95: ['Thunderstorm', '⛈️'], 96: ['Thunderstorm with hail', '⛈️'], 99: ['Thunderstorm with hail', '⛈️']
+    };
+    const formatTemp = (value) => `${Math.round(state.unit === 'celsius' ? value : value * 9 / 5 + 32)}°`;
+    const getWeatherInfo = (code) => weatherCodes[code] || ['Unknown', '🌡️'];
+    const setStatus = (message, error = false) => { $('status').textContent = message; $('status').className = `status${error ? ' error' : ''}`; };
+
+    async function searchCity(name) {
+      const response = await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(name)}&count=1&language=en&format=json`);
+      if (!response.ok) throw new Error('Unable to search for that city.');
+      const result = await response.json();
+      if (!result.results?.length) throw new Error(`No location found for “${name}”.`);
+      return result.results[0];
+    }
+
+    async function fetchWeather(place) {
+      const params = new URLSearchParams({ latitude: place.latitude, longitude: place.longitude, timezone: 'auto', forecast_days: 7,
+        current: 'temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m',
+        daily: 'weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max' });
+      const response = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
+      if (!response.ok) throw new Error('Weather data is temporarily unavailable.');
+      return response.json();
+    }
+
+    function render(place, data) {
+      state.weather = { place, data };
+      const current = data.current;
+      const [description, icon] = getWeatherInfo(current.weather_code);
+      $('dashboard').hidden = false;
+      $('location').textContent = `${place.name}${place.country_code ? `, ${place.country_code}` : ''}`;
+      $('date').textContent = new Date(current.time).toLocaleString([], { weekday: 'long', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+      $('currentIcon').textContent = icon;
+      $('temperature').textContent = formatTemp(current.temperature_2m);
+      $('condition').textContent = description;
+      $('feelsLike').textContent = formatTemp(current.apparent_temperature);
+      $('humidity').textContent = `${current.relative_humidity_2m}%`;
+      $('wind').textContent = `${Math.round(current.wind_speed_10m)} km/h`;
+      $('precipitation').textContent = `${current.precipitation} mm`;
+      $('forecastList').innerHTML = data.daily.time.map((day, index) => {
+        const [label, dayIcon] = getWeatherInfo(data.daily.weather_code[index]);
+        const date = new Date(`${day}T12:00:00`);
+        return `<div class="forecast-day" title="${label}"><strong>${index === 0 ? 'Today' : date.toLocaleDateString([], { weekday: 'short' })}</strong><span class="small-icon" aria-hidden="true">${dayIcon}</span><b>${formatTemp(data.daily.temperature_2m_max[index])}</b><br><span>${formatTemp(data.daily.temperature_2m_min[index])}</span><br><span>${data.daily.precipitation_probability_max[index]}% rain</span></div>`;
+      }).join('');
+    }
+
+    async function loadCity(name) {
+      document.body.classList.add('loading'); setStatus(`Loading weather for ${name}…`);
+      try { const place = await searchCity(name); const data = await fetchWeather(place); render(place, data); setStatus(`Updated ${new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`); }
+      catch (error) { setStatus(error.message, true); }
+      finally { document.body.classList.remove('loading'); }
+    }
+
+    $('searchForm').addEventListener('submit', (event) => { event.preventDefault(); loadCity($('cityInput').value.trim()); });
+    document.querySelectorAll('[data-unit]').forEach((button) => button.addEventListener('click', () => {
+      state.unit = button.dataset.unit; document.querySelectorAll('[data-unit]').forEach((item) => item.classList.toggle('active', item === button));
+      if (state.weather) render(state.weather.place, state.weather.data);
+    }));
+    loadCity('Dhaka');
+  </script>
 </body>
 </html>
