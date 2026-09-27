@@ -1,0 +1,284 @@
+<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Julaid Hosen — Data Entry Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0E1210;
+    --panel:#151B18;
+    --line:rgba(237,239,234,0.10);
+    --line-strong:rgba(237,239,234,0.18);
+    --ink:#ECEFEA;
+    --muted:#8A968E;
+    --accent:#B6FF3C;
+    --accent-dim:rgba(182,255,60,0.14);
+    font-family:'Space Grotesk', system-ui, sans-serif;
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  html{scroll-padding-top:env(safe-area-inset-top,0px);}
+  *,*::before,*::after{box-sizing:inherit;}
+  html,body{margin:0;background:var(--bg);color:var(--ink);}
+  body{overflow-x:hidden;}
+  .mono{font-family:'IBM Plex Mono', ui-monospace, monospace;}
+  a{color:inherit;}
+
+  .wrap{max-width:1040px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- header ---------- */
+  header.top{
+    position:sticky;top:0;top:env(safe-area-inset-top,0px);
+    z-index:10;background:rgba(14,18,16,0.85);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .topbar{display:flex;align-items:center;justify-content:space-between;padding:16px 24px;max-width:1040px;margin:0 auto;}
+  .topbar .name{font-weight:600;font-size:15px;letter-spacing:0.01em;}
+  .topbar .status{font-size:12px;color:var(--accent);display:flex;align-items:center;gap:6px;}
+  .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;
+    align-items:center;padding:64px 24px 56px;max-width:1040px;margin:0 auto;
+    perspective:1200px;
+  }
+  .hero-copy .ref{font-size:12px;color:var(--muted);margin:0 0 18px;}
+  .hero-copy h1{font-size:clamp(34px,6vw,54px);line-height:1.05;margin:0 0 14px;font-weight:700;}
+  .hero-copy .role{font-size:16px;color:var(--accent);margin:0 0 20px;}
+  .hero-copy p{font-size:15px;line-height:1.6;color:var(--muted);max-width:46ch;margin:0 0 26px;}
+  .hero-actions{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{
+    font-size:13px;padding:11px 18px;border-radius:3px;text-decoration:none;
+    border:1px solid var(--line-strong);display:inline-block;
+  }
+  .btn.primary{background:var(--accent);color:#0E1210;border-color:var(--accent);font-weight:600;}
+  .btn.ghost{color:var(--ink);}
+
+  .sheet-stage{
+    height:320px;transform-style:preserve-3d;position:relative;
+    transition:transform 0.15s ease-out;
+  }
+  .sheet-row{
+    position:absolute;left:0;right:0;height:34px;
+    background:var(--panel);border:1px solid var(--line-strong);
+    border-radius:2px;display:flex;align-items:center;padding:0 12px;gap:10px;
+    font-size:11px;color:var(--muted);
+    animation:settle 1.1s cubic-bezier(.2,.8,.2,1) both;
+  }
+  .sheet-row .cell{border-right:1px solid var(--line);padding-right:10px;flex:1;white-space:nowrap;overflow:hidden;}
+  .sheet-row .cell:last-child{border-right:none;flex:1.4;color:var(--ink);}
+  .sheet-row.r0{top:0;   animation-delay:.05s;}
+  .sheet-row.r1{top:44px;animation-delay:.15s;}
+  .sheet-row.r2{top:88px;animation-delay:.25s;}
+  .sheet-row.r3{top:132px;animation-delay:.35s;}
+  .sheet-row.r4{top:176px;animation-delay:.45s;}
+  .sheet-row.r5{top:220px;animation-delay:.55s;background:var(--accent-dim);border-color:rgba(182,255,60,0.4);}
+  @keyframes settle{
+    0%{opacity:0;transform:translate3d(var(--dx,40px),var(--dy,-30px),var(--dz,-60px)) rotateX(var(--rx,30deg)) rotateY(var(--ry,-20deg));}
+    100%{opacity:1;transform:translate3d(0,0,0) rotateX(0) rotateY(0);}
+  }
+  .sheet-row.r0{--dx:-50px;--dy:-40px;--dz:-80px;--rx:35deg;--ry:25deg;}
+  .sheet-row.r1{--dx:60px;--dy:-20px;--dz:-40px;--rx:-25deg;--ry:-30deg;}
+  .sheet-row.r2{--dx:-30px;--dy:30px;--dz:-100px;--rx:40deg;--ry:15deg;}
+  .sheet-row.r3{--dx:45px;--dy:-35px;--dz:-60px;--rx:-30deg;--ry:20deg;}
+  .sheet-row.r4{--dx:-55px;--dy:20px;--dz:-50px;--rx:20deg;--ry:-25deg;}
+  .sheet-row.r5{--dx:35px;--dy:35px;--dz:-70px;--rx:-35deg;--ry:-15deg;}
+
+  section{padding:52px 24px;max-width:1040px;margin:0 auto;border-top:1px solid var(--line);}
+  .kicker{font-size:12px;color:var(--muted);margin:0 0 16px;}
+  .kicker .cellref{color:var(--accent);}
+  h2{font-size:22px;margin:0 0 22px;font-weight:600;}
+
+  /* about */
+  .about p{font-size:15.5px;line-height:1.75;color:#C9CFC9;max-width:64ch;}
+
+  /* experience */
+  .job{border:1px solid var(--line-strong);border-radius:4px;padding:22px 24px;background:var(--panel);}
+  .job-head{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px;}
+  .job-title{font-weight:600;font-size:16px;}
+  .job-sub{font-size:13px;color:var(--muted);}
+  .job ul{margin:0;padding-left:18px;color:#C9CFC9;font-size:14.5px;line-height:1.9;}
+
+  /* skills grid = spreadsheet cells */
+  .grid-table{border:1px solid var(--line-strong);border-radius:4px;overflow:hidden;}
+  .grow{display:grid;grid-template-columns:repeat(2,1fr);}
+  .grow:not(:last-child){border-bottom:1px solid var(--line);}
+  .gcell{
+    padding:13px 16px;font-size:13.5px;display:flex;align-items:center;gap:10px;
+    border-right:1px solid var(--line);
+  }
+  .gcell:last-child{border-right:none;}
+  .gcell .idx{color:var(--muted);font-size:11px;width:20px;}
+
+  /* education timeline */
+  .edu-row{display:grid;grid-template-columns:120px 1fr auto;gap:16px;padding:14px 0;border-bottom:1px solid var(--line);font-size:14px;align-items:baseline;}
+  .edu-row:last-child{border-bottom:none;}
+  .edu-year{color:var(--accent);}
+  .edu-name{color:var(--ink);}
+  .edu-meta{color:var(--muted);font-size:12.5px;}
+
+  /* strengths */
+  .tags{display:flex;flex-wrap:wrap;gap:10px;}
+  .tag{border:1px solid var(--line-strong);border-radius:3px;padding:8px 14px;font-size:13px;color:#C9CFC9;}
+
+  /* contact/footer */
+  footer{padding:56px 24px 48px;max-width:1040px;margin:0 auto;border-top:1px solid var(--line);}
+  .contact-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:30px;}
+  footer h2{font-size:26px;}
+  .contact-list{list-style:none;padding:0;margin:0;font-size:14px;}
+  .contact-list li{padding:10px 0;border-bottom:1px solid var(--line);color:var(--muted);}
+  .contact-list li span{color:var(--ink);float:right;}
+  .fine{margin-top:30px;font-size:12px;color:var(--muted);}
+
+  @media (max-width:720px){
+    .hero{grid-template-columns:1fr;padding-top:40px;}
+    .sheet-stage{height:230px;}
+    .sheet-row{height:28px;font-size:10px;}
+    .sheet-row.r1{top:36px;}.sheet-row.r2{top:72px;}.sheet-row.r3{top:108px;}.sheet-row.r4{top:144px;}.sheet-row.r5{top:180px;}
+    .contact-grid{grid-template-columns:1fr;}
+    .grow{grid-template-columns:1fr;}
+    .gcell{border-right:none;border-bottom:1px solid var(--line);}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .sheet-row{animation:none !important;opacity:1;transform:none !important;}
+    .sheet-stage{transform:none !important;}
+  }
+
+  ::selection{background:var(--accent);color:#0E1210;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="topbar">
+    <div class="name">Julaid Hosen</div>
+    <div class="status mono"><span class="dot"></span>Available for work</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <p class="ref mono">A1 · Data Entry Specialist</p>
+    <h1>Turning scattered<br>data into order.</h1>
+    <p class="role mono">Julaid Hosen</p>
+    <p>I clean, structure and list product data for e‑commerce catalogs — mining, formatting and organizing information so it's accurate, consistent, and ready to use.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="mailto:jihad.sorkar.9856@gmail.com">Get in touch</a>
+      <a class="btn ghost" href="#experience">See experience</a>
+    </div>
+  </div>
+  <div class="sheet-stage" id="stage">
+    <div class="sheet-row r0"><div class="cell">SKU</div><div class="cell">Title</div><div class="cell">Category</div><div class="cell">Status</div></div>
+    <div class="sheet-row r1"><div class="cell">1024</div><div class="cell">Ceramic Mug — 350ml</div><div class="cell">Kitchen</div><div class="cell">Listed</div></div>
+    <div class="sheet-row r2"><div class="cell">1025</div><div class="cell">Cotton Tote Bag</div><div class="cell">Bags</div><div class="cell">Listed</div></div>
+    <div class="sheet-row r3"><div class="cell">1026</div><div class="cell">Desk Lamp — LED</div><div class="cell">Home</div><div class="cell">Listed</div></div>
+    <div class="sheet-row r4"><div class="cell">1027</div><div class="cell">Wireless Mouse</div><div class="cell">Electronics</div><div class="cell">Listed</div></div>
+    <div class="sheet-row r5"><div class="cell">1028</div><div class="cell">Notebook — A5</div><div class="cell">Stationery</div><div class="cell">Verified ✓</div></div>
+  </div>
+</section>
+
+<section class="about">
+  <p class="kicker"><span class="cellref mono">A2</span> <span class="mono">· Objective</span></p>
+  <h2>Career objective</h2>
+  <p>Motivated and detail-oriented, seeking to apply Excel, e‑commerce data entry, product listing, data collection and data management skills — committed to accuracy, organized work, and meeting deadlines.</p>
+</section>
+
+<section id="experience">
+  <p class="kicker"><span class="cellref mono">B1</span> <span class="mono">· Experience</span></p>
+  <h2>Work experience</h2>
+  <div class="job">
+    <div class="job-head">
+      <div class="job-title">E‑Commerce Data Entry Specialist</div>
+      <div class="job-sub mono">Michaels & Radyan Marketplace</div>
+    </div>
+    <ul>
+      <li>Data mining and online product research</li>
+      <li>Data formatting and data extraction</li>
+      <li>Data scraping and data collection</li>
+      <li>Data analysis and spreadsheet management</li>
+      <li>Product listing and e‑commerce data entry</li>
+      <li>Organizing product titles, descriptions, categories and related information</li>
+      <li>Maintaining accurate and consistent product data</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <p class="kicker"><span class="cellref mono">C1</span> <span class="mono">· Core skills</span></p>
+  <h2>What I work with</h2>
+  <div class="grid-table">
+    <div class="grow"><div class="gcell"><span class="idx mono">01</span>Data Mining</div><div class="gcell"><span class="idx mono">02</span>Data Formatting</div></div>
+    <div class="grow"><div class="gcell"><span class="idx mono">03</span>Data Scraping</div><div class="gcell"><span class="idx mono">04</span>Data Extraction</div></div>
+    <div class="grow"><div class="gcell"><span class="idx mono">05</span>Data Collection</div><div class="gcell"><span class="idx mono">06</span>Data Analysis</div></div>
+    <div class="grow"><div class="gcell"><span class="idx mono">07</span>Product Listing</div><div class="gcell"><span class="idx mono">08</span>E‑Commerce Data Entry</div></div>
+    <div class="grow"><div class="gcell"><span class="idx mono">09</span>Microsoft Excel</div><div class="gcell"><span class="idx mono">10</span>Fast Typing</div></div>
+    <div class="grow"><div class="gcell"><span class="idx mono">11</span>Attention to Detail</div><div class="gcell"><span class="idx mono">12</span>Computer Literacy</div></div>
+  </div>
+</section>
+
+<section>
+  <p class="kicker"><span class="cellref mono">D1</span> <span class="mono">· Education</span></p>
+  <h2>Education</h2>
+  <div>
+    <div class="edu-row"><div class="edu-year mono">Running</div><div class="edu-name">Honours</div><div class="edu-meta mono">Currently enrolled</div></div>
+    <div class="edu-row"><div class="edu-year mono">2024</div><div class="edu-name">HSC — Higher Secondary Certificate</div><div class="edu-meta mono">GPA 3.00</div></div>
+    <div class="edu-row"><div class="edu-year mono">2021</div><div class="edu-name">SSC — Secondary School Certificate</div><div class="edu-meta mono">GPA 4.00</div></div>
+  </div>
+</section>
+
+<section>
+  <p class="kicker"><span class="cellref mono">E1</span> <span class="mono">· Strengths & languages</span></p>
+  <h2>Strengths</h2>
+  <div class="tags">
+    <div class="tag">Accurate and efficient</div>
+    <div class="tag">Strong organizational skills</div>
+    <div class="tag">Ability to meet deadlines</div>
+    <div class="tag">Detail-oriented</div>
+  </div>
+  <p class="fine mono">Bengali — Native &nbsp;·&nbsp; English — Intermediate</p>
+</section>
+
+<footer>
+  <div class="contact-grid">
+    <div>
+      <h2>Let's work together.</h2>
+      <p style="color:var(--muted);font-size:14.5px;line-height:1.7;max-width:40ch;">Available for data entry, product listing and catalog management projects.</p>
+      <div class="hero-actions" style="margin-top:20px;">
+        <a class="btn primary" href="mailto:jihad.sorkar.9856@gmail.com">Email me</a>
+      </div>
+    </div>
+    <ul class="contact-list mono">
+      <li>Phone <span>0179103457</span></li>
+      <li>Email <span>jihad.sorkar.9856@gmail.com</span></li>
+      <li>Location <span>Gobindaganj, Rangpur, BD</span></li>
+    </ul>
+  </div>
+</footer>
+
+<script>
+  // subtle parallax tilt on the 3D sheet stack, following pointer
+  var stage = document.getElementById('stage');
+  var hero = document.querySelector('.hero');
+  if (stage && hero && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    hero.addEventListener('mousemove', function(e){
+      var r = hero.getBoundingClientRect();
+      var x = (e.clientX - r.left) / r.width - 0.5;
+      var y = (e.clientY - r.top) / r.height - 0.5;
+      stage.style.transform = 'rotateX(' + (y * -8) + 'deg) rotateY(' + (x * 10) + 'deg)';
+    });
+    hero.addEventListener('mouseleave', function(){
+      stage.style.transform = 'rotateX(0deg) rotateY(0deg)';
+    });
+  }
+</script>
+</body>
+</html>
